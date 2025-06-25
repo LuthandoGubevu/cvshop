@@ -1,6 +1,7 @@
 import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, FileText, BotMessageSquare } from 'lucide-react';
+import { Award, FileText, BotMessageSquare, Check } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
@@ -36,6 +37,55 @@ export default function Home() {
             </Card>
           </div>
         </div>
+
+        <section className="py-16 sm:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Ready for a Professional Touch?
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              While our AI provides great initial feedback, our premium upgrade service offers a complete professional rewrite of your CV.
+            </p>
+          </div>
+          <div className="mt-12 flex justify-center">
+            <Card className="w-full max-w-lg rounded-2xl shadow-xl border-2 border-primary/50">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">Premium CV Upgrade</CardTitle>
+                <CardDescription>A small investment for a big career boost.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-5xl font-extrabold tracking-tight text-foreground">R150</span>
+                  <span className="text-xl font-medium text-muted-foreground">once-off</span>
+                </div>
+                <div className="space-y-4 pt-6 border-t">
+                  <h3 className="text-center font-semibold text-foreground">Improvements & Strengths in the Upgraded CV</h3>
+                  <ul className="space-y-3">
+                    <BenefitItem>
+                      <strong>Professional Layout &amp; Design:</strong> A modern, clean layout that enhances readability.
+                    </BenefitItem>
+                    <BenefitItem>
+                      <strong>Stronger Profile Summary:</strong> A concise, tailored summary that highlights your key strengths.
+                    </BenefitItem>
+                    <BenefitItem>
+                      <strong>Impactful Responsibilities:</strong> Duties rewritten with action verbs and impact-based language.
+                    </BenefitItem>
+                    <BenefitItem>
+                      <strong>Expanded Skills Section:</strong> A well-categorized list showcasing your diverse abilities.
+                    </BenefitItem>
+                    <BenefitItem>
+                      <strong>Consistent Branding:</strong> A unified professional image across all sections.
+                    </BenefitItem>
+                  </ul>
+                </div>
+                <Button size="lg" className="w-full">
+                  Purchase Upgrade
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
       </main>
 
       <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
@@ -54,3 +104,10 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
         </div>
     </div>
 )
+
+const BenefitItem = ({ children }: { children: React.ReactNode }) => (
+  <li className="flex items-start gap-3">
+    <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" />
+    <span className="text-sm text-muted-foreground">{children}</span>
+  </li>
+);
