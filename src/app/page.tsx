@@ -2,6 +2,7 @@ import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FilePenLine, Replace, Rocket } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -81,8 +82,16 @@ export default function Home() {
 
       </main>
 
-      <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} CV Shop. All rights reserved.</p>
+      <footer className="border-t">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} CV Shop. All rights reserved.</p>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 sm:mt-0">
+                <Link href="/pricing" className="text-sm text-muted-foreground hover:text-primary">Pricing</Link>
+                <Link href="/terms-of-service" className="text-sm text-muted-foreground hover:text-primary">Terms of Service</Link>
+                <Link href="/refund-policy" className="text-sm text-muted-foreground hover:text-primary">Refund Policy</Link>
+                <Link href="/cancellation-policy" className="text-sm text-muted-foreground hover:text-primary">Cancellation Policy</Link>
+            </div>
+        </div>
       </footer>
     </div>
   );
