@@ -16,7 +16,7 @@ export default function Home() {
           src="/cv-shop.jpg"
           alt="Person working on a laptop"
           width={1920}
-          height={800}
+          height={1080}
           className="w-full object-cover"
         />
       </section>
@@ -61,7 +61,7 @@ export default function Home() {
           <div className="mt-12 flex justify-center">
             <Card className="max-w-md w-full shadow-lg rounded-2xl">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl">CV Upgrade Service</CardTitle>
+                <CardTitle>CV Upgrade Service</CardTitle>
                 <p className="text-4xl font-bold text-primary pt-2">R150</p>
                 <CardDescription>One-time payment</CardDescription>
               </CardHeader>
