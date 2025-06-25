@@ -11,7 +11,7 @@ export default function Home() {
       </header>
 
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 gap-16 items-start">
           <div className="space-y-6">
             <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
               Elevate Your CV with AI-Powered Feedback
@@ -25,7 +25,7 @@ export default function Home() {
               <FeatureCard icon={<Award className="h-8 w-8" />} title="Land Your Dream Job" description="A polished CV is the first step towards your next career move." />
             </div>
           </div>
-          <div className="row-start-1 lg:row-start-auto">
+          <div>
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
               <CardHeader>
                 <CardTitle>Get Started for Free</CardTitle>
