@@ -58,7 +58,7 @@ export default function Home() {
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-muted-foreground">Before</h3>
                 <Image
-                    src="https://placehold.co/600x800.png"
+                    src="/before-cv.png"
                     alt="Before version of a CV"
                     width={600}
                     height={800}
