@@ -1,3 +1,56 @@
+import { CvUploadForm } from '@/components/cv-upload-form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Award, FileText, BotMessageSquare } from 'lucide-react';
+
 export default function Home() {
-  return <></>;
+  return (
+    <div className="flex flex-col min-h-screen bg-background">
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h1 className="text-3xl font-bold text-primary">CV Drop</h1>
+      </header>
+
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
+              Elevate Your CV with AI-Powered Feedback
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Upload your CV and get instant, actionable suggestions to fix common mistakes, improve language, and make your profile stand out to recruiters.
+            </p>
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+              <FeatureCard icon={<FileText className="h-8 w-8" />} title="Instant AI Analysis" description="Our AI scans your CV for spelling errors and outdated phrases." />
+              <FeatureCard icon={<BotMessageSquare className="h-8 w-8" />} title="Targeted Suggestions" description="Receive clear, actionable advice to enhance your CV's impact." />
+              <FeatureCard icon={<Award className="h-8 w-8" />} title="Land Your Dream Job" description="A polished CV is the first step towards your next career move." />
+            </div>
+          </div>
+          <div className="row-start-1 lg:row-start-auto">
+            <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
+              <CardHeader>
+                <CardTitle>Get Started for Free</CardTitle>
+                <CardDescription>Upload your CV to receive feedback in seconds.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CvUploadForm />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </main>
+
+      <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
+        <p>&copy; {new Date().getFullYear()} CV Drop. All rights reserved.</p>
+      </footer>
+    </div>
+  );
 }
+
+const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
+    <div className="flex items-start space-x-4">
+        <div className="flex-shrink-0 text-accent">{icon}</div>
+        <div>
+            <h3 className="font-semibold text-foreground">{title}</h3>
+            <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+    </div>
+)
