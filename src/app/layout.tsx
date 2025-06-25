@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'CV Drop',
-  description: 'Get AI-powered feedback on your CV.',
+  title: 'CV Shop',
+  description: 'Get your CV professionally rewritten.',
 };
 
 export default function RootLayout({

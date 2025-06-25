@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <h1 className="text-3xl font-bold text-primary">CV Drop</h1>
+        <h1 className="text-3xl font-bold text-primary">CV Shop</h1>
       </header>
 
       <section className="w-full">
@@ -82,7 +82,7 @@ export default function Home() {
       </main>
 
       <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} CV Drop. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} CV Shop. All rights reserved.</p>
       </footer>
     </div>
   );
