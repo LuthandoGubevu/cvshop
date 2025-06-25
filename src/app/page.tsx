@@ -69,12 +69,11 @@ export default function Home() {
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-foreground">After</h3>
                 <Image
-                    src="https://placehold.co/600x800.png"
+                    src="/after-cv.png"
                     alt="After version of a CV"
                     width={600}
                     height={800}
                     className="rounded-2xl shadow-2xl border-2 border-primary mx-auto"
-                    data-ai-hint="resume professional"
                 />
             </div>
           </div>
