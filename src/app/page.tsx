@@ -2,6 +2,7 @@ import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, FileText, BotMessageSquare, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -9,6 +10,17 @@ export default function Home() {
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h1 className="text-3xl font-bold text-primary">CV Drop</h1>
       </header>
+
+      <section className="w-full">
+        <Image
+          src="https://placehold.co/1920x400.png"
+          alt="Person working on a laptop"
+          width={1920}
+          height={400}
+          className="w-full object-cover"
+          data-ai-hint="resume professional"
+        />
+      </section>
 
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         <div className="grid grid-cols-1 gap-16 items-start">
