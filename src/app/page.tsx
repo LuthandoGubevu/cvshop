@@ -1,6 +1,6 @@
 import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FilePenLine, Replace, Rocket } from 'lucide-react';
+import { FilePenLine, Replace, Rocket, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -39,8 +39,8 @@ export default function Home() {
           <div>
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
               <CardHeader>
-                <CardTitle>Upgrade Your CV for R150</CardTitle>
-                <CardDescription>Upload your current CV to start the transformation. It's a small investment for a big career boost.</CardDescription>
+                <CardTitle>Get Your CV Upgraded</CardTitle>
+                <CardDescription>Upload your CV to get started. Our experts will transform it and get back to you within 2-3 business days.</CardDescription>
               </CardHeader>
               <CardContent>
                 <CvUploadForm />
@@ -48,6 +48,35 @@ export default function Home() {
             </Card>
           </div>
         </div>
+
+        <section className="py-16 sm:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              One flat fee for a complete, professional CV overhaul.
+            </p>
+          </div>
+          <div className="mt-12 flex justify-center">
+            <Card className="max-w-md w-full shadow-lg rounded-2xl">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">CV Upgrade Service</CardTitle>
+                <p className="text-4xl font-bold text-primary pt-2">R150</p>
+                <CardDescription>One-time payment</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <ul className="space-y-4 text-sm text-muted-foreground text-left">
+                  <BenefitListItem>Professional Layout & Design</BenefitListItem>
+                  <BenefitListItem>Stronger Profile Summary</BenefitListItem>
+                  <BenefitListItem>Expanded & Clarified Responsibilities</BenefitListItem>
+                  <BenefitListItem>Well-Categorized & Expanded Skills Section</BenefitListItem>
+                  <BenefitListItem>Consistent Branding</BenefitListItem>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
 
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
@@ -105,4 +134,11 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
             <p className="text-sm text-muted-foreground">{description}</p>
         </div>
     </div>
+);
+
+const BenefitListItem = ({ children }: { children: React.ReactNode }) => (
+  <li className="flex items-center">
+    <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+    <span>{children}</span>
+  </li>
 );
