@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { getSuggestionsAction } from "@/app/actions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Zod schema for form validation
 const formSchema = z.object({
@@ -40,7 +39,6 @@ const formSchema = z.object({
 
 export function CvUploadForm() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +52,6 @@ export function CvUploadForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    setResult(null);
 
     const reader = new FileReader();
     reader.onload = async (event) => {
@@ -64,17 +61,18 @@ export function CvUploadForm() {
             throw new Error("Could not read file content.");
         }
         
+        // This action can now be used to trigger the upgrade process,
+        // even though it's still named `getSuggestionsAction`.
         const response = await getSuggestionsAction({ cvContent });
         if (response.error) {
             throw new Error(response.error);
         }
 
-        setResult(response.suggestions || "No suggestions available.");
-
         toast({
-          title: "Success!",
-          description: "We've analyzed your CV and sent a confirmation email.",
+          title: "Submission Received!",
+          description: "We'll email your upgraded CV in 2-3 business days.",
         });
+        form.reset();
 
       } catch (error) {
         console.error("Error during CV processing:", error);
@@ -105,95 +103,80 @@ export function CvUploadForm() {
   };
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Jane Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email Address</FormLabel>
-                <FormControl>
-                  <Input placeholder="you@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="careerGoals"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Career Goals</FormLabel>
-                <FormControl>
-                  <Textarea className="min-h-[100px]" placeholder="Describe your ideal next role or career path..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="cv"
-            render={({ field: { onChange, value, ...rest } }) => (
-              <FormItem>
-                <FormLabel>Upload CV (.txt only)</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="file" 
-                    accept=".txt"
-                    onChange={(e) => onChange(e.target.files?.[0])} 
-                    {...rest}
-                    className="pt-2 file:text-primary file:font-semibold"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" size="lg" className="w-full mt-4" disabled={loading}>
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analyzing...
-              </>
-            ) : (
-              "Get AI Feedback"
-            )}
-          </Button>
-        </form>
-      </Form>
-      {result && (
-        <Card className="mt-8 rounded-2xl bg-primary/5 dark:bg-primary/10 border-accent/50">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="text-accent" />
-                    Your AI-Powered Feedback
-                </CardTitle>
-                <CardDescription>
-                    Here are some suggestions to improve your CV. Consider these as a starting point.
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p className="whitespace-pre-wrap text-sm text-foreground/90">{result}</p>
-            </CardContent>
-        </Card>
-      )}
-    </>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Jane Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email Address</FormLabel>
+              <FormControl>
+                <Input placeholder="you@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="careerGoals"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Career Goals</FormLabel>
+              <FormControl>
+                <Textarea className="min-h-[100px]" placeholder="Describe your ideal next role or career path..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="cv"
+          render={({ field: { onChange, value, ...rest } }) => (
+            <FormItem>
+              <FormLabel>Upload CV (.txt only)</FormLabel>
+              <FormControl>
+                <Input 
+                  type="file" 
+                  accept=".txt"
+                  onChange={(e) => onChange(e.target.files?.[0])} 
+                  {...rest}
+                  className="pt-2 file:text-primary file:font-semibold"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" size="lg" className="w-full mt-4" disabled={loading}>
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            "Get Your CV Upgraded"
+          )}
+        </Button>
+        <p className="text-center text-xs text-muted-foreground pt-1">
+            Delivered in 2–3 business days via email. 1 free revision included.
+        </p>
+      </form>
+    </Form>
   );
 }

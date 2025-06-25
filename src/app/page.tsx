@@ -1,7 +1,6 @@
 import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, FileText, BotMessageSquare, Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { FilePenLine, Replace, Rocket } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Home() {
@@ -26,22 +25,22 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-16 items-start">
           <div className="space-y-6">
             <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
-              Elevate Your CV with AI-Powered Feedback
+              Transform Your CV into a Job-Winning Document
             </h2>
             <p className="text-lg text-muted-foreground">
-              Upload your CV and get instant, actionable suggestions to fix common mistakes, improve language, and make your profile stand out to recruiters.
+              Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
             </p>
-            <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-              <FeatureCard icon={<FileText className="h-8 w-8" />} title="Instant AI Analysis" description="Our AI scans your CV for spelling errors and outdated phrases." />
-              <FeatureCard icon={<BotMessageSquare className="h-8 w-8" />} title="Targeted Suggestions" description="Receive clear, actionable advice to enhance your CV's impact." />
-              <FeatureCard icon={<Award className="h-8 w-8" />} title="Land Your Dream Job" description="A polished CV is the first step towards your next career move." />
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4">
+              <FeatureCard icon={<FilePenLine className="h-8 w-8" />} title="Human-Crafted Rewriting" description="We don’t use generic templates—every CV is written by real people who understand what recruiters look for." />
+              <FeatureCard icon={<Replace className="h-8 w-8" />} title="Before & After Transformation" description="We refine your words, structure, and layout for maximum impact." />
+              <FeatureCard icon={<Rocket className="h-8 w-8" />} title="Career-Focused Targeting" description="We tailor your CV for the roles you want, emphasizing your strengths and aligning with your goals." />
             </div>
           </div>
           <div>
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
               <CardHeader>
-                <CardTitle>Get Started for Free</CardTitle>
-                <CardDescription>Upload your CV to receive feedback in seconds.</CardDescription>
+                <CardTitle>Upgrade Your CV for R150</CardTitle>
+                <CardDescription>Upload your current CV to start the transformation. It's a small investment for a big career boost.</CardDescription>
               </CardHeader>
               <CardContent>
                 <CvUploadForm />
@@ -51,50 +50,34 @@ export default function Home() {
         </div>
 
         <section className="py-16 sm:py-24">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Ready for a Professional Touch?
+              Here’s how we transform a CV →
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              While our AI provides great initial feedback, our premium upgrade service offers a complete professional rewrite of your CV.
-            </p>
           </div>
-          <div className="mt-12 flex justify-center">
-            <Card className="w-full max-w-lg rounded-2xl shadow-xl border-2 border-primary/50">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl">Premium CV Upgrade</CardTitle>
-                <CardDescription>A small investment for a big career boost.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-5xl font-extrabold tracking-tight text-foreground">R150</span>
-                  <span className="text-xl font-medium text-muted-foreground">once-off</span>
-                </div>
-                <div className="space-y-4 pt-6 border-t">
-                  <h3 className="text-center font-semibold text-foreground">Improvements & Strengths in the Upgraded CV</h3>
-                  <ul className="space-y-3">
-                    <BenefitItem>
-                      <strong>Professional Layout &amp; Design:</strong> A modern, clean layout that enhances readability.
-                    </BenefitItem>
-                    <BenefitItem>
-                      <strong>Stronger Profile Summary:</strong> A concise, tailored summary that highlights your key strengths.
-                    </BenefitItem>
-                    <BenefitItem>
-                      <strong>Impactful Responsibilities:</strong> Duties rewritten with action verbs and impact-based language.
-                    </BenefitItem>
-                    <BenefitItem>
-                      <strong>Expanded Skills Section:</strong> A well-categorized list showcasing your diverse abilities.
-                    </BenefitItem>
-                    <BenefitItem>
-                      <strong>Consistent Branding:</strong> A unified professional image across all sections.
-                    </BenefitItem>
-                  </ul>
-                </div>
-                <Button size="lg" className="w-full">
-                  Purchase Upgrade
-                </Button>
-              </CardContent>
-            </Card>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center">
+                <h3 className="text-2xl font-semibold mb-4 text-muted-foreground">Before</h3>
+                <Image
+                    src="https://placehold.co/600x800.png"
+                    alt="Before version of a CV"
+                    width={600}
+                    height={800}
+                    className="rounded-2xl shadow-lg filter blur-sm mx-auto"
+                    data-ai-hint="document text"
+                />
+            </div>
+            <div className="text-center">
+                <h3 className="text-2xl font-semibold mb-4 text-foreground">After</h3>
+                <Image
+                    src="https://placehold.co/600x800.png"
+                    alt="After version of a CV"
+                    width={600}
+                    height={800}
+                    className="rounded-2xl shadow-2xl border-2 border-primary mx-auto"
+                    data-ai-hint="resume professional"
+                />
+            </div>
           </div>
         </section>
 
@@ -115,11 +98,4 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
             <p className="text-sm text-muted-foreground">{description}</p>
         </div>
     </div>
-)
-
-const BenefitItem = ({ children }: { children: React.ReactNode }) => (
-  <li className="flex items-start gap-3">
-    <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" />
-    <span className="text-sm text-muted-foreground">{children}</span>
-  </li>
 );
