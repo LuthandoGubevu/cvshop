@@ -12,12 +12,11 @@ export default function Home() {
 
       <section className="w-full">
         <Image
-          src="https://placehold.co/1920x800.png"
+          src="/cv-shop.jpg"
           alt="Person working on a laptop"
           width={1920}
           height={800}
           className="w-full object-cover"
-          data-ai-hint="resume professional"
         />
       </section>
 
