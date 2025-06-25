@@ -1,9 +1,8 @@
 "use server";
 
 import { cvCheckerSuggestions, type CvCheckerOutput } from "@/ai/flows/cv-checker";
-import { db, storage } from "@/lib/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { adminDb, adminStorage } from "@/lib/firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 
 type ActionResult = {
     suggestions?: string;
@@ -23,33 +22,43 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     const { name, email, careerGoals, cvDataUri } = input;
     console.log(`CV analysis request received for a user: ${email}`);
 
-    // 1. Upload CV to Firebase Storage
-    const mimeType = cvDataUri.match(/data:(.*);base64,/)?.[1] ?? "application/octet-stream";
+    // 1. Upload CV to Firebase Storage using Admin SDK
+    const matches = cvDataUri.match(/^data:(.+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      throw new Error("Invalid data URI format.");
+    }
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, 'base64');
     const extension = mimeType.split('/')[1] ?? 'bin';
-    const fileName = `${Date.now()}-${email.replace(/[^a-zA-Z0-9]/g, '_')}.${extension}`;
-    const storageRef = ref(storage, `cvs/${fileName}`);
-    const uploadResult = await uploadString(storageRef, cvDataUri, 'data_url');
-    const downloadURL = await getDownloadURL(uploadResult.ref);
+    const fileName = `cvs/${Date.now()}-${email.replace(/[^a-zA-Z0-9]/g, '_')}.${extension}`;
+    
+    const file = adminStorage.file(fileName);
+    await file.save(buffer, { metadata: { contentType: mimeType } });
+
+    // A signed URL is more secure for accessing the file.
+    const [downloadURL] = await file.getSignedUrl({
+        action: 'read',
+        expires: '03-09-2491', // A very long expiry date
+    });
     console.log('File uploaded successfully to Firebase Storage:', downloadURL);
 
     // 2. Save submission details to Firestore
-    await addDoc(collection(db, "submissions"), {
+    await adminDb.collection("submissions").add({
       name,
       email,
       careerGoals,
       cvUrl: downloadURL,
-      submittedAt: serverTimestamp(),
+      status: "pending",
+      submittedAt: FieldValue.serverTimestamp(),
     });
     console.log('Submission details saved to Firestore.');
-    
-    // The user's request mentioned Cloudinary, but since we are using Firebase stack,
-    // this is where you would typically upload the file to Firebase Storage.
 
     const result: CvCheckerOutput = await cvCheckerSuggestions({ cvDataUri });
     
     // Mocking email notification
     console.log(`Email notification 'sent' to admin and user.`);
-    // Here you would implement actual email sending logic, e.g., using Resend, SendGrid, etc.
+    // Actual email logic will be handled from the admin dashboard.
 
     return { suggestions: result.suggestions };
   } catch (error) {
