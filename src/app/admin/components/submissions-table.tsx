@@ -130,7 +130,7 @@ export default function SubmissionsTable({ initialSubmissions }: SubmissionsTabl
                     </SelectContent>
                   </Select>
                   
-                  <Button asChild variant="outline" size="icon">
+                  <Button asChild variant="outline" size="icon" disabled={!sub.cvUrl.startsWith('http')}>
                     <Link href={sub.cvUrl} target="_blank"><Download /></Link>
                   </Button>
 

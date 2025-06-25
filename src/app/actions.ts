@@ -1,7 +1,7 @@
 "use server";
 
 import { cvCheckerSuggestions, type CvCheckerOutput } from "@/ai/flows/cv-checker";
-import { adminDb, adminStorage } from "@/lib/firebase-admin";
+import { adminDb } from "@/lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 
 type ActionResult = {
@@ -21,8 +21,11 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
   try {
     const { name, email, careerGoals, cvDataUri } = input;
     console.log(`CV analysis request received for a user: ${email}`);
+    
+    console.warn("Firebase Storage disabled temporarily. CV not uploaded.");
 
-    // 1. Upload CV to Firebase Storage using Admin SDK
+    // 1. Upload CV to Firebase Storage using Admin SDK (TEMPORARILY DISABLED)
+    /*
     const matches = cvDataUri.match(/^data:(.+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
       throw new Error("Invalid data URI format.");
@@ -42,13 +45,14 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
         expires: '03-09-2491', // A very long expiry date
     });
     console.log('File uploaded successfully to Firebase Storage:', downloadURL);
+    */
 
     // 2. Save submission details to Firestore
     await adminDb.collection("submissions").add({
       name,
       email,
       careerGoals,
-      cvUrl: downloadURL,
+      cvUrl: "#storage-disabled", // Use a placeholder
       status: "pending",
       submittedAt: FieldValue.serverTimestamp(),
     });

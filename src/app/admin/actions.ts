@@ -3,7 +3,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { adminDb, adminStorage } from '@/lib/firebase-admin';
+import { adminDb } from '@/lib/firebase-admin';
+// import { adminStorage } from '@/lib/firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { Resend } from 'resend';
 import UpgradedCvEmail from '@/emails/upgraded-cv-email';
@@ -68,6 +69,9 @@ export async function updateSubmissionStatus(id: string, status: Submission['sta
 
 export async function handleUpgradedCvUpload(submissionId: string, formData: FormData) {
   try {
+    console.warn("Firebase Storage is temporarily disabled. Upgraded CV upload is not available.");
+    return { error: 'File upload is temporarily disabled.' };
+    /*
     const file = formData.get('file') as File;
     if (!file) {
       throw new Error('No file provided.');
@@ -89,6 +93,7 @@ export async function handleUpgradedCvUpload(submissionId: string, formData: For
 
     revalidatePath('/admin');
     return { success: true, url: downloadURL };
+    */
   } catch (error) {
     console.error("Upload failed:", error);
     return { error: 'Failed to upload upgraded CV.' };
