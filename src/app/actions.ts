@@ -3,6 +3,7 @@
 import { cvCheckerSuggestions, type CvCheckerOutput } from "@/ai/flows/cv-checker";
 import { adminDb } from "@/lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { Resend } from "resend";
 
 type ActionResult = {
     suggestions?: string;
@@ -18,51 +19,57 @@ export type SuggestionActionInput = {
 };
 
 export async function getSuggestionsAction(input: SuggestionActionInput): Promise<ActionResult> {
+  // Ensure you have set RESEND_API_KEY and RESEND_FROM_EMAIL in your environment variables
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
   try {
     const { name, email, careerGoals, cvDataUri } = input;
-    console.log(`CV analysis request received for a user: ${email}`);
-    
-    console.warn("Firebase Storage disabled temporarily. CV not uploaded.");
+    console.log(`CV submission received from user: ${email}`);
 
-    // 1. Upload CV to Firebase Storage using Admin SDK (TEMPORARILY DISABLED)
-    /*
-    const matches = cvDataUri.match(/^data:(.+);base64,(.+)$/);
+    // 1. Convert data URI to buffer for email attachment
+    const matches = cvDataUri.match(/^data:.+;base64,(.+)$/);
     if (!matches || matches.length !== 3) {
       throw new Error("Invalid data URI format.");
     }
-    const mimeType = matches[1];
     const base64Data = matches[2];
-    const buffer = Buffer.from(base64Data, 'base64');
-    const extension = mimeType.split('/')[1] ?? 'bin';
-    const fileName = `cvs/${Date.now()}-${email.replace(/[^a-zA-Z0-9]/g, '_')}.${extension}`;
+    const fileBuffer = Buffer.from(base64Data, 'base64');
     
-    const file = adminStorage.file(fileName);
-    await file.save(buffer, { metadata: { contentType: mimeType } });
-
-    // A signed URL is more secure for accessing the file.
-    const [downloadURL] = await file.getSignedUrl({
-        action: 'read',
-        expires: '03-09-2491', // A very long expiry date
+    // 2. Send email to admin with CV attached
+    await resend.emails.send({
+        from: `CV Shop Submissions <${process.env.RESEND_FROM_EMAIL || 'noreply@yourdomain.com'}>`,
+        to: "lgubevu@gmail.com",
+        subject: `New CV Submission from ${name}`,
+        html: `
+          <h3>New CV Submission</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Career Goals:</strong></p>
+          <p>${careerGoals.replace(/\n/g, '<br>')}</p>
+        `,
+        attachments: [
+          {
+            filename: `${name.replace(/[^a-zA-Z0-9]/g, "_")}_CV.pdf`,
+            content: fileBuffer,
+          },
+        ],
     });
-    console.log('File uploaded successfully to Firebase Storage:', downloadURL);
-    */
-
-    // 2. Save submission details to Firestore
+    console.log('Submission email sent to admin.');
+    
+    // 3. Save submission details to Firestore (for admin dashboard tracking)
     await adminDb.collection("submissions").add({
       name,
       email,
       careerGoals,
-      cvUrl: "#storage-disabled", // Use a placeholder
+      cvUrl: "sent-via-email", // The CV is sent by email, not stored.
       status: "pending",
       submittedAt: FieldValue.serverTimestamp(),
     });
     console.log('Submission details saved to Firestore.');
 
+    // 4. Run AI suggestions (as before)
     const result: CvCheckerOutput = await cvCheckerSuggestions({ cvDataUri });
     
-    // Mocking email notification
-    console.log(`Email notification 'sent' to admin and user.`);
-    // Actual email logic will be handled from the admin dashboard.
+    console.log(`AI suggestions generated for user.`);
 
     return { suggestions: result.suggestions };
   } catch (error) {

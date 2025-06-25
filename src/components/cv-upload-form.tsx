@@ -21,7 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { getSuggestionsAction, type SuggestionActionInput } from "@/app/actions";
 
 // Allowed file types and size
-const ACCEPTED_MIME_TYPES = ["text/plain", "application/pdf", "image/jpeg", "image/png"];
+const ACCEPTED_MIME_TYPES = ["application/pdf"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 // Zod schema for form validation
@@ -34,7 +34,7 @@ const formSchema = z.object({
     "A CV file is required."
   ).refine(
     (file) => file && ACCEPTED_MIME_TYPES.includes(file.type),
-    "Only .txt, .pdf, .jpg, and .png files are supported."
+    "Only .pdf files are supported."
   ).refine(
     (file) => file && file.size <= MAX_FILE_SIZE,
     "File size must be 5MB or less."
@@ -158,11 +158,11 @@ export function CvUploadForm() {
           name="cv"
           render={({ field: { onChange, value, ...rest } }) => (
             <FormItem>
-              <FormLabel>Upload CV (.txt, .pdf, .jpg, .png)</FormLabel>
+              <FormLabel>Upload CV (.pdf only)</FormLabel>
               <FormControl>
                 <Input 
                   type="file" 
-                  accept=".txt,.pdf,.jpg,.jpeg,.png"
+                  accept=".pdf"
                   onChange={(e) => onChange(e.target.files?.[0])} 
                   {...rest}
                   className="pt-2 file:text-primary file:font-semibold"
