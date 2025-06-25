@@ -20,6 +20,10 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { getSuggestionsAction } from "@/app/actions";
 
+// Allowed file types and size
+const ACCEPTED_MIME_TYPES = ["text/plain", "application/pdf", "image/jpeg", "image/png"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
 // Zod schema for form validation
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -29,11 +33,11 @@ const formSchema = z.object({
     (file) => file && file.size > 0,
     "A CV file is required."
   ).refine(
-    (file) => file && file.type === "text/plain",
-    "Only .txt files are supported for now."
+    (file) => file && ACCEPTED_MIME_TYPES.includes(file.type),
+    "Only .txt, .pdf, .jpg, and .png files are supported."
   ).refine(
-    (file) => file && file.size <= 1024 * 1024, // 1MB
-    "File size must be 1MB or less."
+    (file) => file && file.size <= MAX_FILE_SIZE,
+    "File size must be 5MB or less."
   ),
 });
 
@@ -56,14 +60,12 @@ export function CvUploadForm() {
     const reader = new FileReader();
     reader.onload = async (event) => {
       try {
-        const cvContent = event.target?.result as string;
-        if (!cvContent) {
+        const cvDataUri = event.target?.result as string;
+        if (!cvDataUri) {
             throw new Error("Could not read file content.");
         }
         
-        // This action can now be used to trigger the upgrade process,
-        // even though it's still named `getSuggestionsAction`.
-        const response = await getSuggestionsAction({ cvContent });
+        const response = await getSuggestionsAction({ cvDataUri });
         if (response.error) {
             throw new Error(response.error);
         }
@@ -99,7 +101,7 @@ export function CvUploadForm() {
         setLoading(false);
     }
     
-    reader.readAsText(values.cv);
+    reader.readAsDataURL(values.cv);
   };
 
   return (
@@ -149,11 +151,11 @@ export function CvUploadForm() {
           name="cv"
           render={({ field: { onChange, value, ...rest } }) => (
             <FormItem>
-              <FormLabel>Upload CV (.txt only)</FormLabel>
+              <FormLabel>Upload CV (.txt, .pdf, .jpg, .png)</FormLabel>
               <FormControl>
                 <Input 
                   type="file" 
-                  accept=".txt"
+                  accept=".txt,.pdf,.jpg,.jpeg,.png"
                   onChange={(e) => onChange(e.target.files?.[0])} 
                   {...rest}
                   className="pt-2 file:text-primary file:font-semibold"

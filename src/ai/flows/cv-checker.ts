@@ -13,9 +13,11 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const CvCheckerInputSchema = z.object({
-  cvContent: z
+  cvDataUri: z
     .string()
-    .describe('The content of the CV to be checked and improved.'),
+    .describe(
+      "A CV file as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+    ),
 });
 export type CvCheckerInput = z.infer<typeof CvCheckerInputSchema>;
 
@@ -38,11 +40,11 @@ const prompt = ai.definePrompt({
   output: {schema: CvCheckerOutputSchema},
   prompt: `You are an AI assistant designed to provide suggestions for improving a CV.
 
-  Analyze the content of the CV and provide actionable suggestions to:
+  Analyze the content of the CV provided in the media and provide actionable suggestions to:
   - Correct spelling errors
   - Update outdated language
 
-  CV Content: {{{cvContent}}}
+  CV: {{media url=cvDataUri}}
 
   Suggestions:`,
 });
