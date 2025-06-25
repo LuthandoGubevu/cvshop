@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { getSuggestionsAction } from "@/app/actions";
+import { getSuggestionsAction, type SuggestionActionInput } from "@/app/actions";
 
 // Allowed file types and size
 const ACCEPTED_MIME_TYPES = ["text/plain", "application/pdf", "image/jpeg", "image/png"];
@@ -65,7 +65,14 @@ export function CvUploadForm() {
             throw new Error("Could not read file content.");
         }
         
-        const response = await getSuggestionsAction({ cvDataUri });
+        const actionInput: SuggestionActionInput = {
+          name: values.name,
+          email: values.email,
+          careerGoals: values.careerGoals,
+          cvDataUri: cvDataUri
+        };
+
+        const response = await getSuggestionsAction(actionInput);
         if (response.error) {
             throw new Error(response.error);
         }
