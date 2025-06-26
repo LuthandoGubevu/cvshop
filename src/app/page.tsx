@@ -14,11 +14,10 @@ export default function Home() {
 
       <section className="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
         <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Person working on a laptop"
+          src="/cv-shop.jpg"
+          alt="CV Shop background"
           fill
           className="object-cover z-0"
-          data-ai-hint="office laptop"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
         <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
