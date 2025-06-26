@@ -1,7 +1,5 @@
 "use server";
 
-import { adminDb } from "@/lib/firebase-admin";
-import { FieldValue } from "firebase-admin/firestore";
 import { Resend } from "resend";
 
 type ActionResult = {
@@ -67,19 +65,7 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     });
     console.log('Submission email sent to admin.');
     
-    // 3. Save submission details to Firestore (for admin dashboard tracking)
-    await adminDb.collection("submissions").add({
-      name,
-      email,
-      careerGoals,
-      cvUrl: "sent-via-email", // The CV is sent by email, not stored.
-      status: "pending",
-      submittedAt: FieldValue.serverTimestamp(),
-    });
-    console.log('Submission details saved to Firestore.');
-
-    // AI suggestions are no longer part of this user-facing flow.
-    // The main success action is emailing the submission and storing details in the DB.
+    // Firebase is no longer used for tracking.
 
     return {};
   } catch (error) {
