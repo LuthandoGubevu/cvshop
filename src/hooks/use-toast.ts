@@ -1,3 +1,4 @@
+
 "use client"
 
 // Inspired by react-hot-toast library
@@ -57,6 +58,17 @@ interface State {
 }
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const initialState: State = { toasts: [] }
+
+let memoryState: State = initialState
+
+const listeners = new Set<() => void>()
+
+const dispatch = (action: Action) => {
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => listener())
+}
 
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
@@ -129,17 +141,6 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-const listeners: Array<(state: State) => void> = []
-
-let memoryState: State = { toasts: [] }
-
-function dispatch(action: Action) {
-  memoryState = reducer(memoryState, action)
-  listeners.forEach((listener) => {
-    listener(memoryState)
-  })
-}
-
 type Toast = Omit<ToasterToast, "id">
 
 function toast({ ...props }: Toast) {
@@ -172,25 +173,21 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
+  const state = React.useSyncExternalStore(
+    (listener) => {
+      listeners.add(listener)
+      return () => listeners.delete(listener)
+    },
+    () => memoryState,
+    () => initialState
+  );
 
-  React.useEffect(() => {
-    listeners.push(setState)
-    return () => {
-      const index = listeners.indexOf(setState)
-      if (index > -1) {
-        listeners.splice(index, 1)
-      }
-    }
-  }, [])
 
-  return React.useMemo(() => {
-    return {
-      ...state,
-      toast,
-      dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
-    }
-  }, [state])
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+  }
 }
 
 export { useToast, toast }
