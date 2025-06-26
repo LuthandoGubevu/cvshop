@@ -66,35 +66,35 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-primary">CV Shop</h1>
       </header>
 
-      <section className="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
+      <section className="relative w-full min-h-[90vh] h-auto flex items-center justify-center text-center text-white overflow-hidden px-4 py-24 sm:py-32">
         <Image
           src="/cv-shop.jpg"
           alt="CV Shop background"
           fill
+          priority
           className="object-cover z-0"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="relative z-20 container mx-auto max-w-md sm:max-w-2xl lg:max-w-4xl">
 
-       <div className="mb-4"> 
-        <h3 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
+          <div className="mb-4"> 
+            <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
               South Africa's Leading CV Upgrade Service
             </h3>
-            </div>
+          </div>
 
-            <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight">
-              Transform Your CV into a Job-Winning Document
-            </h2>
-
-           
-            <p className="mt-6 text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-              Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
-            </p>
-            <div className="mt-10 grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              <FeatureCard icon={<FilePenLine className="h-8 w-8" />} title="Human-Crafted Rewriting" description="We don’t use generic templates—every CV is written by real people who understand what recruiters look for." />
-              <FeatureCard icon={<Replace className="h-8 w-8" />} title="Before & After Transformation" description="We refine your words, structure, and layout for maximum impact." />
-              <FeatureCard icon={<Rocket className="h-8 w-8" />} title="Career-Focused Targeting" description="We tailor your CV for the roles you want, emphasizing your strengths and aligning with your goals." />
-            </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+            Transform Your CV into a Job-Winning Document
+          </h2>
+       
+          <p className="mt-6 text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+            Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
+          </p>
+          <div className="mt-12 grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            <FeatureCard icon={<FilePenLine className="h-8 w-8" />} title="Human-Crafted Rewriting" description="We don’t use generic templates—every CV is written by real people who understand what recruiters look for." />
+            <FeatureCard icon={<Replace className="h-8 w-8" />} title="Before & After Transformation" description="We refine your words, structure, and layout for maximum impact." />
+            <FeatureCard icon={<Rocket className="h-8 w-8" />} title="Career-Focused Targeting" description="We tailor your CV for the roles you want, emphasizing your strengths and aligning with your goals." />
+          </div>
         </div>
       </section>
       
