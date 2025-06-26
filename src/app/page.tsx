@@ -4,6 +4,7 @@ import { FilePenLine, Replace, Rocket, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
+import AnimatedStats from '@/components/animated-stats';
 
 export default function Home() {
   return (
@@ -34,6 +35,8 @@ export default function Home() {
             </div>
         </div>
       </section>
+      
+      <AnimatedStats />
 
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         <div className="flex justify-center">
