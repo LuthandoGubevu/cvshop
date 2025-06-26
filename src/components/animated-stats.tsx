@@ -68,7 +68,7 @@ const AnimatedStats = () => {
           {count.toLocaleString()}
         </div>
         <p className="mt-4 text-lg text-muted-foreground">
-          We’ve helped over 1,000 professionals elevate their careers — and counting.
+          We've helped thousands of professionals elevate their career, & counting
         </p>
       </div>
     </section>
