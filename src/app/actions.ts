@@ -1,12 +1,10 @@
 "use server";
 
-import { cvCheckerSuggestions, type CvCheckerOutput } from "@/ai/flows/cv-checker";
 import { adminDb } from "@/lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 import { Resend } from "resend";
 
 type ActionResult = {
-    suggestions?: string;
     error?: string;
 }
 
@@ -19,17 +17,23 @@ export type SuggestionActionInput = {
 };
 
 export async function getSuggestionsAction(input: SuggestionActionInput): Promise<ActionResult> {
-  // Ensure you have set RESEND_API_KEY, RESEND_FROM_EMAIL, and ADMIN_EMAIL in your environment variables
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const adminEmail = process.env.ADMIN_EMAIL;
-
-  if (!adminEmail) {
-    const errorMessage = "Admin email is not configured. The submission cannot be processed.";
-    console.error(errorMessage);
-    return { error: errorMessage };
-  }
-
   try {
+    // Ensure you have set RESEND_API_KEY, RESEND_FROM_EMAIL, and ADMIN_EMAIL in your environment variables
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.RESEND_FROM_EMAIL;
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+    if (!resendApiKey) {
+        throw new Error("Resend API key is not configured. Please set RESEND_API_KEY in your environment variables.");
+    }
+    if (!fromEmail) {
+        throw new Error("Resend 'from' email is not configured. Please set RESEND_FROM_EMAIL in your environment variables (e.g., 'noreply@yourdomain.com'). It must be a verified domain in Resend.");
+    }
+    if (!adminEmail) {
+        throw new Error("Admin email is not configured. Please set ADMIN_EMAIL in your environment variables.");
+    }
+    
+    const resend = new Resend(resendApiKey);
     const { name, email, careerGoals, cvDataUri } = input;
     console.log(`CV submission received from user: ${email}`);
 
@@ -43,7 +47,7 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     
     // 2. Send email to admin with CV attached
     await resend.emails.send({
-        from: `CV Shop Submissions <${process.env.RESEND_FROM_EMAIL || 'noreply@yourdomain.com'}>`,
+        from: `CV Shop Submissions <${fromEmail}>`,
         to: adminEmail,
         subject: `New CV Submission from ${name}`,
         html: `
@@ -73,12 +77,10 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     });
     console.log('Submission details saved to Firestore.');
 
-    // 4. Run AI suggestions (as before)
-    const result: CvCheckerOutput = await cvCheckerSuggestions({ cvDataUri });
-    
-    console.log(`AI suggestions generated for user.`);
+    // AI suggestions are no longer part of this user-facing flow.
+    // The main success action is emailing the submission and storing details in the DB.
 
-    return { suggestions: result.suggestions };
+    return {};
   } catch (error) {
     console.error("Error in getSuggestionsAction:", error);
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
