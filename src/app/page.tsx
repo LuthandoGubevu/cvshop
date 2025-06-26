@@ -74,9 +74,18 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
         <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-            <h2 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
+
+       <div className="mb-4"> 
+        <h3 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
+              South Africa's Leading CV Upgrade Service
+            </h3>
+            </div>
+
+            <h2 className="text-3xl lg:text-6xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
+
+           
             <p className="mt-6 text-xl text-primary-foreground/90 max-w-3xl mx-auto">
               Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
             </p>
