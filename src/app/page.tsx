@@ -21,7 +21,7 @@ export default function Home() {
           data-ai-hint="office laptop"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
             <h2 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
@@ -88,23 +88,21 @@ export default function Home() {
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-muted-foreground">Before</h3>
                 <Image
-                    src="https://placehold.co/600x800.png"
+                    src="/before-cv.png"
                     alt="Before version of a CV"
                     width={600}
                     height={800}
                     className="rounded-2xl shadow-lg mx-auto"
-                    data-ai-hint="document text"
                 />
             </div>
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-foreground">After</h3>
                 <Image
-                    src="https://placehold.co/600x800.png"
+                    src="/after-cv.png"
                     alt="After version of a CV"
                     width={600}
                     height={800}
                     className="rounded-2xl shadow-2xl border-2 border-primary mx-auto"
-                    data-ai-hint="document resume"
                 />
             </div>
           </div>
