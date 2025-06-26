@@ -218,7 +218,6 @@ export default function Home() {
                 <Link href="/terms-of-service" className="text-sm text-muted-foreground hover:text-primary">Terms of Service</Link>
                 <Link href="/refund-policy" className="text-sm text-muted-foreground hover:text-primary">Refund Policy</Link>
                 <Link href="/cancellation-policy" className="text-sm text-muted-foreground hover:text-primary">Cancellation Policy</Link>
-                <Link href="/admin" className="text-sm text-muted-foreground hover:text-primary">Admin</Link>
             </div>
         </div>
       </footer>
