@@ -73,15 +73,20 @@ export function CvUploadForm() {
         };
 
         const response = await getSuggestionsAction(actionInput);
+        
         if (response.error) {
-            throw new Error(response.error);
+          toast({
+            variant: "destructive",
+            title: "Submission Failed",
+            description: response.error,
+          });
+        } else {
+          toast({
+            title: "Submission Received!",
+            description: "We'll email your upgraded CV in 2-3 business days.",
+          });
+          form.reset();
         }
-
-        toast({
-          title: "Submission Received!",
-          description: "We'll email your upgraded CV in 2-3 business days.",
-        });
-        form.reset();
 
       } catch (error) {
         console.error("Error during CV processing:", error);
