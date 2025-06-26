@@ -14,17 +14,18 @@ export default function Home() {
 
       <section className="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
         <Image
-          src="/cv-shop.jpg"
+          src="https://placehold.co/1920x1080.png"
           alt="Person working on a laptop"
           fill
           className="object-cover z-0"
+          data-ai-hint="office laptop"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight">
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+            <h2 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
-            <p className="mt-4 text-lg text-primary-foreground/90 max-w-3xl mx-auto">
+            <p className="mt-6 text-xl text-primary-foreground/90 max-w-3xl mx-auto">
               Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
             </p>
             <div className="mt-10 grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-left">
@@ -40,7 +41,7 @@ export default function Home() {
           <div className="w-full max-w-2xl">
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
               <CardContent className="p-6 md:p-8 space-y-8">
-                {/* --- Pricing Section --- */}
+                {/* --- Combined Pricing & Form Section --- */}
                 <div className="space-y-4">
                   <div className="text-center">
                     <h2 className="text-3xl font-bold tracking-tight">Simple, Transparent Pricing</h2>
@@ -65,7 +66,6 @@ export default function Home() {
                 
                 <Separator />
                 
-                {/* --- Form Section --- */}
                 <div className="space-y-4">
                   <div className="text-center">
                     <CardTitle>Get Your CV Upgraded</CardTitle>
@@ -88,7 +88,7 @@ export default function Home() {
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-muted-foreground">Before</h3>
                 <Image
-                    src="/before-cv.png"
+                    src="https://placehold.co/600x800.png"
                     alt="Before version of a CV"
                     width={600}
                     height={800}
@@ -99,11 +99,12 @@ export default function Home() {
             <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-4 text-foreground">After</h3>
                 <Image
-                    src="/after-cv.png"
+                    src="https://placehold.co/600x800.png"
                     alt="After version of a CV"
                     width={600}
                     height={800}
                     className="rounded-2xl shadow-2xl border-2 border-primary mx-auto"
+                    data-ai-hint="document resume"
                 />
             </div>
           </div>
@@ -130,8 +131,8 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
     <div className="flex items-start space-x-4">
         <div className="flex-shrink-0 text-accent">{icon}</div>
         <div>
-            <h3 className="font-semibold text-primary-foreground">{title}</h3>
-            <p className="text-sm text-primary-foreground/80">{description}</p>
+            <h3 className="text-lg font-semibold text-primary-foreground">{title}</h3>
+            <p className="mt-1 text-base text-primary-foreground/80">{description}</p>
         </div>
     </div>
 );
