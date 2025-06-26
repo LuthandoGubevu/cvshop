@@ -63,10 +63,18 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <h1 className="text-3xl font-bold text-primary">CV Shop</h1>
+        <Link href="/">
+          <Image
+            src="/logo.jpg"
+            alt="CV Shop Logo"
+            width={150}
+            height={40}
+            priority
+          />
+        </Link>
       </header>
 
-      <section className="relative w-full h-auto min-h-[90vh] flex items-center justify-center text-center text-white overflow-hidden px-4 py-24 sm:py-32">
+      <section className="relative w-full h-auto min-h-[90vh] flex items-center justify-center text-center text-white overflow-hidden px-4 pt-24 sm:pt-32">
         <Image
           src="/cv-shop.jpg"
           alt="CV Shop background"
@@ -83,7 +91,7 @@ export default function Home() {
             </h3>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             Transform Your CV into a Job-Winning Document
           </h2>
        

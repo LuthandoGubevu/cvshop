@@ -1,14 +1,21 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function RefundPolicyPage() {
   return (
     <div className="bg-background text-foreground">
       <header className="border-b">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-              <h1 className="text-2xl font-bold text-primary">
-                  <Link href="/">CV Shop</Link>
-              </h1>
-              <Link href="/" className="text-sm font-medium text-primary hover:underline">Back to Home</Link>
+            <Link href="/">
+              <Image
+                src="/logo.jpg"
+                alt="CV Shop Logo"
+                width={150}
+                height={40}
+                priority
+              />
+            </Link>
+            <Link href="/" className="text-sm font-medium text-primary hover:underline">Back to Home</Link>
           </div>
       </header>
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
