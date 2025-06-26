@@ -66,7 +66,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-primary">CV Shop</h1>
       </header>
 
-      <section className="relative w-full min-h-[90vh] h-auto flex items-center justify-center text-center text-white overflow-hidden px-4 py-24 sm:py-32">
+      <section className="relative w-full h-auto min-h-[90vh] flex items-center justify-center text-center text-white overflow-hidden px-4 py-24 sm:py-32">
         <Image
           src="/cv-shop.jpg"
           alt="CV Shop background"
@@ -218,6 +218,7 @@ export default function Home() {
                 <Link href="/terms-of-service" className="text-sm text-muted-foreground hover:text-primary">Terms of Service</Link>
                 <Link href="/refund-policy" className="text-sm text-muted-foreground hover:text-primary">Refund Policy</Link>
                 <Link href="/cancellation-policy" className="text-sm text-muted-foreground hover:text-primary">Cancellation Policy</Link>
+                <Link href="/admin" className="text-sm text-muted-foreground hover:text-primary">Admin</Link>
             </div>
         </div>
       </footer>
