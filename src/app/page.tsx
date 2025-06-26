@@ -11,32 +11,32 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-primary">CV Shop</h1>
       </header>
 
-      <section className="w-full">
+      <section className="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
         <Image
           src="/cv-shop.jpg"
           alt="Person working on a laptop"
-          width={1920}
-          height={1080}
-          className="w-full object-cover"
+          fill
+          className="object-cover z-0"
         />
-      </section>
-
-      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        <div className="grid grid-cols-1 gap-16 items-start">
-          <div className="space-y-6">
-            <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
+        <div className="absolute inset-0 bg-primary/80 z-10"></div>
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-primary-foreground/90 max-w-3xl mx-auto">
               Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
             </p>
-            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4">
+            <div className="mt-10 grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-left">
               <FeatureCard icon={<FilePenLine className="h-8 w-8" />} title="Human-Crafted Rewriting" description="We don’t use generic templates—every CV is written by real people who understand what recruiters look for." />
               <FeatureCard icon={<Replace className="h-8 w-8" />} title="Before & After Transformation" description="We refine your words, structure, and layout for maximum impact." />
               <FeatureCard icon={<Rocket className="h-8 w-8" />} title="Career-Focused Targeting" description="We tailor your CV for the roles you want, emphasizing your strengths and aligning with your goals." />
             </div>
-          </div>
-          <div>
+        </div>
+      </section>
+
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
               <CardHeader>
                 <CardTitle>Get Your CV Upgraded</CardTitle>
@@ -130,8 +130,8 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
     <div className="flex items-start space-x-4">
         <div className="flex-shrink-0 text-accent">{icon}</div>
         <div>
-            <h3 className="font-semibold text-foreground">{title}</h3>
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <h3 className="font-semibold text-primary-foreground">{title}</h3>
+            <p className="text-sm text-primary-foreground/80">{description}</p>
         </div>
     </div>
 );
