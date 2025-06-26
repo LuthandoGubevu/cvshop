@@ -81,7 +81,7 @@ export default function Home() {
             </h3>
             </div>
 
-            <h2 className="text-3xl lg:text-6xl font-extrabold tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
 
