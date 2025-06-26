@@ -92,7 +92,7 @@ export default function Home() {
                     alt="Before version of a CV"
                     width={600}
                     height={800}
-                    className="rounded-2xl shadow-lg filter blur-sm mx-auto"
+                    className="rounded-2xl shadow-lg mx-auto"
                     data-ai-hint="document text"
                 />
             </div>
