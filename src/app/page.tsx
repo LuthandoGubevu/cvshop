@@ -21,7 +21,7 @@ export default function Home() {
           data-ai-hint="office laptop"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <h2 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
               Transform Your CV into a Job-Winning Document
             </h2>
