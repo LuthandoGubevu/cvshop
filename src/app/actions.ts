@@ -17,17 +17,15 @@ export type SuggestionActionInput = {
 
 export async function getSuggestionsAction(input: SuggestionActionInput): Promise<ActionResult> {
   try {
-    // Ensure you have set RESEND_API_KEY, RESEND_FROM_EMAIL, and ADMIN_EMAIL in your environment variables
+    // Ensure you have set RESEND_API_KEY and ADMIN_EMAIL in your environment variables
     const resendApiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.RESEND_FROM_EMAIL;
     const adminEmail = process.env.ADMIN_EMAIL;
 
     if (!resendApiKey) {
         throw new Error("Resend API key is not configured. Please set RESEND_API_KEY in your environment variables.");
     }
-    if (!fromEmail) {
-        throw new Error("Resend 'from' email is not configured. Please set RESEND_FROM_EMAIL in your environment variables (e.g., 'noreply@yourdomain.com'). It must be a verified domain in Resend.");
-    }
+    // Using a hardcoded 'from' email ('onboarding@resend.dev') for testing, so no check for RESEND_FROM_EMAIL is needed.
+    // In production, you would use a verified domain with Resend.
     if (!adminEmail) {
         throw new Error("Admin email is not configured. Please set ADMIN_EMAIL in your environment variables.");
     }
@@ -45,8 +43,8 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     const fileBuffer = Buffer.from(base64Data, 'base64');
     
     // 2. Send email to admin with CV attached
-    await resend.emails.send({
-        from: `CV Shop Submissions <${fromEmail}>`,
+    const { data, error } = await resend.emails.send({
+        from: 'CV Drop <onboarding@resend.dev>',
         to: adminEmail,
         subject: `New CV Submission from ${name}`,
         html: `
@@ -63,9 +61,14 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
           },
         ],
     });
+
+    if (error) {
+        console.error("Resend error:", error);
+        throw new Error(`Failed to send email: ${error.message}`);
+    }
+
+    console.log('Resend success response:', data);
     console.log('Submission email sent to admin.');
-    
-    // Firebase is no longer used for tracking.
 
     return {};
   } catch (error) {
