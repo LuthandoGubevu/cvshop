@@ -11,7 +11,7 @@ import UpgradedCvEmail from '@/emails/upgraded-cv-email';
 
 // --- AUTH ACTIONS ---
 
-export async function login(secretKey: string) {
+export async function login(secretKey: string): Promise<{ success?: true; error?: string }> {
   if (secretKey === process.env.ADMIN_SECRET_KEY) {
     cookies().set('admin-auth', 'true', {
       httpOnly: true,
@@ -19,7 +19,7 @@ export async function login(secretKey: string) {
       maxAge: 60 * 60 * 24 * 7, // 1 week
       path: '/',
     });
-    redirect('/admin');
+    return { success: true };
   }
   return { error: 'Invalid secret key.' };
 }

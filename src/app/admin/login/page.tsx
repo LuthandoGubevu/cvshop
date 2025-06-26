@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,7 @@ const formSchema = z.object({
 export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,12 +34,15 @@ export default function AdminLoginPage() {
     setLoading(true);
     try {
       const result = await login(values.secretKey);
-      if (result?.error) {
+      if (result.success) {
+        router.push('/admin');
+      } else {
         toast({
           variant: "destructive",
           title: "Login Failed",
-          description: result.error,
+          description: result.error || "Invalid secret key.",
         });
+        setLoading(false);
       }
     } catch (error) {
       toast({
@@ -45,7 +50,6 @@ export default function AdminLoginPage() {
         title: "An unexpected error occurred",
         description: "Please try again later.",
       });
-    } finally {
       setLoading(false);
     }
   };
