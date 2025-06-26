@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { FilePenLine, Replace, Rocket, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
 
 export default function Home() {
   return (
@@ -38,45 +39,44 @@ export default function Home() {
         <div className="flex justify-center">
           <div className="w-full max-w-2xl">
             <Card className="rounded-2xl shadow-xl border-2 border-transparent hover:border-primary/20 transition-all duration-300">
-              <CardHeader>
-                <CardTitle>Get Your CV Upgraded</CardTitle>
-                <CardDescription>Upload your CV to get started. Our experts will transform it and get back to you within 2-3 business days.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CvUploadForm />
+              <CardContent className="p-6 md:p-8 space-y-8">
+                {/* --- Pricing Section --- */}
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h2 className="text-3xl font-bold tracking-tight">Simple, Transparent Pricing</h2>
+                    <p className="mt-2 text-lg text-muted-foreground">
+                      One flat fee for a complete, professional CV overhaul.
+                    </p>
+                  </div>
+                  
+                  <div className="text-center border rounded-lg p-6">
+                    <CardTitle>CV Upgrade Service</CardTitle>
+                    <p className="text-4xl font-bold text-primary pt-2">R150</p>
+                    <CardDescription>One-time payment</CardDescription>
+                    <ul className="mt-6 space-y-4 text-sm text-muted-foreground text-left max-w-xs mx-auto">
+                      <BenefitListItem>Professional Layout & Design</BenefitListItem>
+                      <BenefitListItem>Stronger Profile Summary</BenefitListItem>
+                      <BenefitListItem>Expanded & Clarified Responsibilities</BenefitListItem>
+                      <BenefitListItem>Well-Categorized & Expanded Skills Section</BenefitListItem>
+                      <BenefitListItem>Consistent Branding</BenefitListItem>
+                    </ul>
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                {/* --- Form Section --- */}
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <CardTitle>Get Your CV Upgraded</CardTitle>
+                    <CardDescription>Upload your CV to get started. Our experts will transform it and get back to you within 2-3 business days.</CardDescription>
+                  </div>
+                  <CvUploadForm />
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
-
-        <section className="py-16 sm:py-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              One flat fee for a complete, professional CV overhaul.
-            </p>
-          </div>
-          <div className="mt-12 flex justify-center">
-            <Card className="max-w-md w-full shadow-lg rounded-2xl">
-              <CardHeader className="text-center">
-                <CardTitle>CV Upgrade Service</CardTitle>
-                <p className="text-4xl font-bold text-primary pt-2">R150</p>
-                <CardDescription>One-time payment</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <ul className="space-y-4 text-sm text-muted-foreground text-left">
-                  <BenefitListItem>Professional Layout & Design</BenefitListItem>
-                  <BenefitListItem>Stronger Profile Summary</BenefitListItem>
-                  <BenefitListItem>Expanded & Clarified Responsibilities</BenefitListItem>
-                  <BenefitListItem>Well-Categorized & Expanded Skills Section</BenefitListItem>
-                  <BenefitListItem>Consistent Branding</BenefitListItem>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
 
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
