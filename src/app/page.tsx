@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { getSuggestionsAction, type SuggestionActionInput } from "@/app/actions";
 import { CvUploadForm } from '@/components/cv-upload-form';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { FilePenLine, Replace, Rocket, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -171,6 +172,42 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="py-16 sm:py-24 bg-secondary/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                What Our Clients Say
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Real stories from professionals who landed their dream jobs.
+              </p>
+            </div>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <TestimonialCard
+                quote="The transformation was incredible. My new CV is professional, concise, and truly highlights my skills. I started getting callbacks almost immediately!"
+                name="Thabo M."
+                title="Software Engineer"
+                avatarSrc="https://placehold.co/40x40.png"
+                avatarFallback="TM"
+              />
+              <TestimonialCard
+                quote="I was stuck in my job search for months. CV Shop completely revamped my resume and I got three interviews in the first week. I can't recommend them enough!"
+                name="Jessica P."
+                title="Marketing Manager"
+                avatarSrc="https://placehold.co/40x40.png"
+                avatarFallback="JP"
+              />
+              <TestimonialCard
+                quote="As a recent graduate, I had no idea how to present my experience. The team at CV Shop created a document that gave me the confidence to apply for senior roles. Thank you!"
+                name="Lerato K."
+                title="Junior Accountant"
+                avatarSrc="https://placehold.co/40x40.png"
+                avatarFallback="LK"
+              />
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <footer className="border-t">
@@ -203,4 +240,22 @@ const BenefitListItem = ({ children }: { children: React.ReactNode }) => (
     <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
     <span>{children}</span>
   </li>
+);
+
+const TestimonialCard = ({ quote, name, title, avatarSrc, avatarFallback }: { quote: string, name: string, title: string, avatarSrc: string, avatarFallback: string }) => (
+    <Card className="flex flex-col bg-card">
+        <CardContent className="pt-6 flex-grow">
+            <p className="text-muted-foreground italic">"{quote}"</p>
+        </CardContent>
+        <CardFooter className="flex items-center gap-4 mt-auto">
+            <Avatar>
+                <AvatarImage src={avatarSrc} alt={name} data-ai-hint="person" />
+                <AvatarFallback>{avatarFallback}</AvatarFallback>
+            </Avatar>
+            <div>
+                <p className="font-semibold text-foreground">{name}</p>
+                <p className="text-sm text-muted-foreground">{title}</p>
+            </div>
+        </CardFooter>
+    </Card>
 );
