@@ -14,6 +14,7 @@ export type SuggestionActionInput = {
     email: string;
     careerGoals: string;
     cvDataUri: string;
+    filename: string;
 };
 
 export async function getSuggestionsAction(input: SuggestionActionInput): Promise<ActionResult> {
@@ -34,7 +35,7 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
     }
     
     const resend = new Resend(resendApiKey);
-    const { name, email, careerGoals, cvDataUri } = input;
+    const { name, email, careerGoals, cvDataUri, filename } = input;
     console.log(`CV submission received from user: ${email}`);
 
     // 1. Convert data URI to buffer for email attachment
@@ -59,7 +60,7 @@ export async function getSuggestionsAction(input: SuggestionActionInput): Promis
         `,
         attachments: [
           {
-            filename: `${name.replace(/[^a-zA-Z0-9]/g, "_")}_CV.pdf`,
+            filename: filename,
             content: fileBuffer,
           },
         ],

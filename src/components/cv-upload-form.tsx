@@ -69,7 +69,8 @@ export function CvUploadForm() {
           name: values.name,
           email: values.email,
           careerGoals: values.careerGoals,
-          cvDataUri: cvDataUri
+          cvDataUri: cvDataUri,
+          filename: values.cv.name,
         };
 
         const response = await getSuggestionsAction(actionInput);
