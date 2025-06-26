@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect } from 'react';
+import { useToast } from "@/hooks/use-toast";
+import { getSuggestionsAction, type SuggestionActionInput } from "@/app/actions";
 import { CvUploadForm } from '@/components/cv-upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FilePenLine, Replace, Rocket, CheckCircle2 } from 'lucide-react';
@@ -7,6 +12,53 @@ import { Separator } from '@/components/ui/separator';
 import AnimatedStats from '@/components/animated-stats';
 
 export default function Home() {
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const processPaymentCallback = async () => {
+      const url = new URL(window.location.href);
+      const ref = url.searchParams.get("ref");
+
+      if (ref) {
+        // Immediately clean the URL to prevent re-triggering on refresh
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        const cvDataString = sessionStorage.getItem("cvForm");
+        
+        if (cvDataString) {
+          const cvData: SuggestionActionInput = JSON.parse(cvDataString);
+
+          // Let's show a pending toast
+          const { dismiss } = toast({
+            title: "Processing Submission...",
+            description: "Your payment was successful. Please wait while we submit your CV.",
+          });
+
+          const response = await getSuggestionsAction(cvData);
+          
+          dismiss();
+
+          if (response.error) {
+            toast({
+              variant: "destructive",
+              title: "Submission Failed After Payment",
+              description: `Your payment was successful, but we had an issue sending your CV. Please contact support. Error: ${response.error}`,
+            });
+          } else {
+            toast({
+              title: "Submission Received!",
+              description: "We've received your payment and CV. We'll email your upgraded version in 2-3 business days.",
+            });
+          }
+          
+          sessionStorage.removeItem("cvForm");
+        }
+      }
+    };
+
+    processPaymentCallback();
+  }, [toast]);
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">

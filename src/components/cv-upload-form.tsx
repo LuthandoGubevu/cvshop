@@ -18,7 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { getSuggestionsAction, type SuggestionActionInput } from "@/app/actions";
 
 // Allowed file types and size
 const ACCEPTED_MIME_TYPES = ["application/pdf"];
@@ -54,18 +53,18 @@ export function CvUploadForm() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     setLoading(true);
 
     const reader = new FileReader();
-    reader.onload = async (event) => {
+    reader.onload = (event) => {
       try {
         const cvDataUri = event.target?.result as string;
         if (!cvDataUri) {
             throw new Error("Could not read file content.");
         }
         
-        const actionInput: SuggestionActionInput = {
+        const formData = {
           name: values.name,
           email: values.email,
           careerGoals: values.careerGoals,
@@ -73,24 +72,11 @@ export function CvUploadForm() {
           filename: values.cv.name,
         };
 
-        const response = await getSuggestionsAction(actionInput);
-        
-        if (response.error) {
-          toast({
-            variant: "destructive",
-            title: "Submission Failed",
-            description: response.error,
-          });
-        } else {
-          toast({
-            title: "Submission Received!",
-            description: "We'll email your upgraded CV in 2-3 business days.",
-          });
-          form.reset();
-        }
+        sessionStorage.setItem("cvForm", JSON.stringify(formData));
+        window.location.href = "https://paystack.shop/pay/zmymgvq1fq";
 
       } catch (error) {
-        console.error("Error during CV processing:", error);
+        console.error("Error preparing for payment:", error);
         let errorMessage = "An unknown error occurred.";
         if (error instanceof Error) {
           errorMessage = error.message;
@@ -100,7 +86,6 @@ export function CvUploadForm() {
           title: "Uh oh! Something went wrong.",
           description: errorMessage,
         });
-      } finally {
         setLoading(false);
       }
     };
@@ -182,14 +167,14 @@ export function CvUploadForm() {
           {loading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Submitting...
+              Proceeding to Payment...
             </>
           ) : (
             "Get Your CV Upgraded"
           )}
         </Button>
         <p className="text-center text-xs text-muted-foreground pt-1">
-            Delivered in 2–3 business days via email. 1 free revision included.
+            You will be redirected to Paystack to complete your payment.
         </p>
       </form>
     </Form>
