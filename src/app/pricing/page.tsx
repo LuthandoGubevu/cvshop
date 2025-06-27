@@ -8,7 +8,7 @@ export default function PricingPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
             <Link href="/">
               <Image
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="CV Shop Logo"
                 width={150}
                 height={40}

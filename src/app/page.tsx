@@ -65,16 +65,16 @@ export default function Home() {
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Link href="/">
           <Image
-            src="/logo.jpg"
-            alt="CV Shop Logo"
-            width={150}
-            height={40}
+            src="/logo.png"
+            alt="CV Shop-Logo"
+            width={100}
+            height={20}
             priority
           />
         </Link>
       </header>
 
-      <section className="relative w-full h-auto min-h-[90vh] flex items-center justify-center text-center text-white overflow-hidden px-4 pt-24 sm:pt-32">
+      <section className="relative w-full h-auto min-h-[100vh] flex items-center justify-center text-center text-white overflow-hidden px-4 pt-24 sm:pt-32">
         <Image
           src="/cv-shop.jpg"
           alt="CV Shop background"
@@ -83,19 +83,19 @@ export default function Home() {
           className="object-cover z-0"
         />
         <div className="absolute inset-0 bg-primary/80 z-10"></div>
-        <div className="relative z-20 container mx-auto max-w-md sm:max-w-2xl lg:max-w-4xl">
+        <div className="relative z-20 container mx-auto max-w-md sm:max-w-2xl lg:max-w-4xl text-center space-y-6">
 
-          <div className="mb-4"> 
+          <div className="mb-4">
             <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
               South Africa's Leading CV Upgrade Service
             </h3>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight">
             Transform Your CV into a Job-Winning Document
           </h2>
        
-          <p className="mt-6 text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+          <p className="mt-6 text-base sm:text-lg text-primary-foreground/90 max-w-3xl mx-auto">
             Get a professionally rewritten, formatted, and personalized CV crafted by real people—designed to make you stand out and land interviews.
           </p>
           <div className="mt-12 grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-left">
